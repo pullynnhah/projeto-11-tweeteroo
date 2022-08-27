@@ -1,13 +1,17 @@
 import express from "express";
+import cors from "cors";
+
 import {
   postSignupHandler,
   postTweetsHandler,
   getTweetsHandler,
   getTweetsByUsernameHandler,
-} from "./handlers";
+} from "./handlers.js";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
+
 const port = "5000";
 
 app.post("/sign-up", postSignupHandler);

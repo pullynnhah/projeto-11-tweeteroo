@@ -7,7 +7,11 @@ function isValidBody(body, fields) {
   }
 
   for (const field of fields) {
-    if (typeof body[field] !== "string") {
+    const value = body[field];
+    if (typeof value !== "string") {
+      return false;
+    }
+    if (value.length === 0) {
       return false;
     }
   }
@@ -22,6 +26,7 @@ function getTweet(tweet) {
 const postSignupHandler = (req, res) => {
   if (!isValidBody(req.body, ["username", "avatar"])) {
     res.status(400).send("Todos os campos são obrigatórios!");
+    return;
   }
   usersDB.push(req.body);
   res.status(201).send("OK");
@@ -30,6 +35,7 @@ const postSignupHandler = (req, res) => {
 const postTweetsHandler = (req, res) => {
   if (!isValidBody(req.body, ["username", "tweet"])) {
     res.status(400).send("Todos os campos são obrigatórios!");
+    return;
   }
   tweetsDB.push(req.body);
   res.status(201).send("OK");
